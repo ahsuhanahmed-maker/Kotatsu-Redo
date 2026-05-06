@@ -51,6 +51,7 @@ class DetailsMenuProvider(
 		menu.findItem(R.id.action_shortcut).isVisible = ShortcutManagerCompat.isRequestPinShortcutSupported(activity)
 		menu.findItem(R.id.action_scrobbling).isVisible = viewModel.isScrobblingAvailable
 		menu.findItem(R.id.action_online).isVisible = viewModel.remoteManga.value != null
+		menu.findItem(R.id.action_source_merger).isVisible = manga?.source != LocalMangaSource
 		menu.findItem(R.id.action_stats).isVisible = viewModel.isStatsAvailable.value
 	}
 
@@ -88,6 +89,10 @@ class DetailsMenuProvider(
 
 			R.id.action_alternatives -> {
 				router.openAlternatives(manga)
+			}
+
+			R.id.action_source_merger -> {
+				router.openSourceMerger(manga)
 			}
 
 			R.id.action_stats -> {

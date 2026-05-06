@@ -286,6 +286,9 @@
 			android:name="org.koitharu.kotatsu.alternatives.ui.AlternativesActivity"
 			android:label="@string/alternatives" />
 		<activity
+			android:name="org.koitharu.kotatsu.source.merger.ui.SourceMergerActivity"
+			android:label="@string/source_merger" />
+		<activity
 			android:name="org.koitharu.kotatsu.settings.about.AppUpdateActivity"
 			android:label="@string/app_update_available" />
 		<activity

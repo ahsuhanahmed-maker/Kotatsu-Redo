@@ -83,6 +83,11 @@ fun alternativeAD(
 			item.mangaModel.progress,
 			ListModelDiffCallback.PAYLOAD_PROGRESS_CHANGED in payloads,
 		)
+		binding.buttonMigrate.isVisible = item.actionVisible
+		if (item.actionVisible) {
+			binding.buttonMigrate.text = context.getString(item.actionTextRes)
+			binding.buttonMigrate.icon = ContextCompat.getDrawable(context, item.actionIconRes)
+		}
 		binding.chipSource.also { chip ->
 			chip.text = item.manga.source.getTitle(chip.context)
 			ImageRequest.Builder(context)

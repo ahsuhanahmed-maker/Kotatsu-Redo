@@ -25,6 +25,7 @@ import dagger.hilt.android.EntryPointAccessors
 import org.koitharu.kotatsu.BuildConfig
 import org.koitharu.kotatsu.R
 import org.koitharu.kotatsu.alternatives.ui.AlternativesActivity
+import org.koitharu.kotatsu.source.merger.ui.SourceMergerActivity
 import org.koitharu.kotatsu.backups.ui.backup.BackupDialogFragment
 import org.koitharu.kotatsu.backups.ui.restore.RestoreDialogFragment
 import org.koitharu.kotatsu.bookmarks.ui.AllBookmarksActivity
@@ -176,6 +177,13 @@ class AppRouter private constructor(
     fun openAlternatives(manga: Manga) {
         startActivity(
             Intent(contextOrNull() ?: return, AlternativesActivity::class.java)
+                .putExtra(KEY_MANGA, ParcelableManga(manga)),
+        )
+    }
+
+    fun openSourceMerger(manga: Manga) {
+        startActivity(
+            Intent(contextOrNull() ?: return, SourceMergerActivity::class.java)
                 .putExtra(KEY_MANGA, ParcelableManga(manga)),
         )
     }

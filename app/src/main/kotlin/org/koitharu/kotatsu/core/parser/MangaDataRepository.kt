@@ -18,6 +18,7 @@ import org.koitharu.kotatsu.core.db.entity.toEntities
 import org.koitharu.kotatsu.core.db.entity.toEntity
 import org.koitharu.kotatsu.core.db.entity.toManga
 import org.koitharu.kotatsu.core.db.entity.toMangaChapters
+import org.koitharu.kotatsu.core.db.entity.MergedSourceEntity
 import org.koitharu.kotatsu.core.db.entity.toMangaTags
 import org.koitharu.kotatsu.core.model.LocalMangaSource
 import org.koitharu.kotatsu.core.model.isLocal
@@ -159,6 +160,23 @@ class MangaDataRepository @Inject constructor(
 		if (!chapters.isNullOrEmpty() && manga.id in db.getMangaDao()) {
 			db.getChaptersDao().replaceAll(manga.id, chapters.withIndex().toEntities(manga.id))
 		}
+	}
+
+	suspend fun setMergedSource(mangaId: Long, fallbackMangaId: Long) {
+		db.getMergedSourceDao().upsert(
+			MergedSourceEntity(
+				mangaId = mangaId,
+				fallbackMangaId = fallbackMangaId,
+			),
+		)
+	}
+
+	suspend fun findMergedMangaId(mangaId: Long): Long? {
+		return db.getMergedSourceDao().find(mangaId)
+	}
+
+	suspend fun findMergedManga(mangaId: Long, withChapters: Boolean): Manga? {
+		return findMergedMangaId(mangaId)?.let { findMangaById(it, withChapters) }
 	}
 
 	suspend fun gcChaptersCache() {
